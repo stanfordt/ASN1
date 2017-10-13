@@ -96,7 +96,7 @@
                     <th>Building</th> 
                     <th>Room #</th>
                     <th>Instructor Last Name</th>
-                    <th>First Name</th>
+                    <th>Instructor First Name</th>
                 </tr>
                 <?php while ($stmt2->fetch()) { ?>
                 <tr>

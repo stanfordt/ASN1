@@ -132,11 +132,6 @@ br {
 .right {
     text-align: right;
 }
-.table {
-    margin: 0 auto;
-    max-width: 1000px;
-    float: none;   
-}
 
 /********************************************************************
 * Additional styles for the Product Manager application
