@@ -1,0 +1,76 @@
+<?php 
+  require_once('database.php');
+  $action = "subject";
+  $SubjectAbbr = $_POST['subjectSelect'];
+  
+
+    $query1 = "SELECT CRN, Section, Days, ClassTime, Locations.Building, Locations. RoomNum, Instructors.LastName, Instructors.FirstName
+                FROM Classes, Locations, Courses, Instructors, Subjects
+                WHERE Classes.SubjectID = Subjects.SubjectID
+                AND Subjects.SubjectAbbr = ?
+                AND Classes.CourseID = Courses.CourseID
+                AND Classes.InstructorID = Instructors.InstructorID
+                AND Classes.LocationID = Locations.LocationID;";
+
+    
+    $stmt1= $db->prepare($query1);
+    $stmt1->bind_param('s', $SubjectAbbr);
+    $stmt1->execute();
+    $stmt1->store_result();
+    // Three variables we will bind the results to
+    $stmt1->bind_result($CRN, $Section, $Days, $ClassTime, $Building, $RoomNum, $LastName, $FirstName);
+  
+
+?>
+               
+               
+               
+               
+               
+               
+               
+               
+               <h1>Class Availability</h1>
+                <h3>Please select a subject to view the classes</h3>
+                <form name="subjectSelect" method="POST" action="subject">
+                    <select name="subjectSelect">
+                        <option value="">Select...</option>
+                        <option value="1">Test</option>
+                        <option value="2">Test2</option>
+                        <option value="3">Test3</option>
+                    </select>
+                </br>
+                <input type ="submit">
+                </form>
+            <div class="table">
+            <table>
+                <tr>
+                    <th>CRN</th>
+                    <th>Section</th>
+                    <th>Days</th>
+                    <th>Time</th>
+                    <th>Building</th>
+                    <th>Room Number</th>
+                    <th>Instructor Last Name</th>
+                    <th>Instructor First Name</th>
+                </tr>
+                <?php while ($stmt1->fetch()) { ?>
+                <tr>
+                    <td><?php echo $CRN; ?></td>
+                    <td><?php echo $Section; ?></td>
+                    <td><?php echo $Days; ?></td>
+                    <td><?php echo $ClassTime; ?></td>
+                    <td><?php echo $Building; ?></td>
+                    <td><?php echo $RoomNum; ?></td>
+                    <td><?php echo $LastName; ?></td>
+                    <td><?php echo $FirstName; ?></td>
+                </tr>
+
+                <!-- result set is available -->
+
+                  <?php } 
+    $stmt1->free_result();
+    $db->close();?>
+                    
+            </table>
+                
